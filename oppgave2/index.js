@@ -35,18 +35,29 @@ const users = [
 
 
   const nameSearchHandler = (e) => {
-    const searchString = e.target.value;
+    const searchTerm = e.target.value;
     //const person = users.filter(({name}) => {return name === searchString});
-    const person = users.find(({name}) => {
-        if (searchString === name) {
-            createTableUI(name)
+    if (searchTerm) {
+        console.log("hello");
+    }
+    else {
+        console.log("bye");
+    }
+    /*const person = users.find(user => {
+        if (searchString === user.name) {
+            const userObject = findUser(user.name);
+            createTableUI(userObject);
         }
-    });
+    });*/
 
   }
 
-  const findUser = () => {
-
+  const findUser = (name) => {
+    for (const user of users) {
+        if (name === user.name) {
+            return user;
+        }
+    }
   }
 
   const userListUpdate = () => {
