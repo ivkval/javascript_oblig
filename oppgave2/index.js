@@ -34,35 +34,37 @@ const users = [
   const filterButton = document.getElementById("filter");
 
 
-  const nameSearchHandler = (e) => {
+const nameSearchHandler = (e) => {
     const searchTerm = e.target.value;
-    //const person = users.filter(({name}) => {return name === searchString});
     if (searchTerm) {
-        console.log("hello");
+        const result = users.find(user => user.name === searchTerm );
+        if (result) {
+            createTableUI([result]);
+        }
+        else {
+            userUl.innerHTML = `<p id="error-msg">Ingen person med navnet ${searchTerm} finnes.</p>`;
+        }
     }
     else {
-        console.log("bye");
+        createTableUI(users);
     }
-    /*const person = users.find(user => {
-        if (searchString === user.name) {
-            const userObject = findUser(user.name);
-            createTableUI(userObject);
-        }
-    });*/
+}
 
-  }
-
-  const findUser = (name) => {
-    for (const user of users) {
-        if (name === user.name) {
-            return user;
+const ageFilterHandler = () => {
+    const filterAge = Number(ageInputElement.value);
+    if (filterAge && !isNaN(filterAge)) {
+        const newAgeArray = users.filter(user => user.age > filterAge);
+        if (newAgeArray.length > 0) {
+            createTableUI(newAgeArray);
         }
+        else{
+            userUl.innerHTML = `<p id="error-msg">Ingen personer med alder over ${filterAge} år.</p>`;
+        }  
     }
-  }
-
-  const userListUpdate = () => {
-
-  }
+    else{
+        createTableUI(users);
+    }
+}
   
   const main = () => {
     createTableUI(users);
@@ -71,3 +73,4 @@ const users = [
   main();
 
   nameInputElement.addEventListener("keyup", nameSearchHandler);
+  filterButton.addEventListener("click", ageFilterHandler);

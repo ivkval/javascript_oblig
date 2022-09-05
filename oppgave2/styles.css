@@ -26,3 +26,8 @@ body {
     border: 1px solid #ccc;
     padding: 1rem;
   }
+
+  #error-msg {
+    color: red;
+    font-size: 24px;
+  }
