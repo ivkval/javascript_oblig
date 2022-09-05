@@ -1,3 +1,4 @@
+// List of objects with user information
 const users = [
     { id: 0, name: "Trude", age: 77 },
     { id: 1, name: "Simen", age: 85 },
@@ -12,6 +13,7 @@ const users = [
     { id: 10, name: "Morgan", age: 87 }
   ];
   
+  // ul element that will contain the users
   const userUl = document.getElementById("users");
   
   const createTableUI = (users) => {
@@ -29,48 +31,52 @@ const users = [
   // TODO: Lytt til tastatur klikk på søkefeltet, den skal trigge søkefunksjonen (handleSearch)
   // TODO: Lytt til klikk på filter-knappen, den skal trigge filterfunksjonen (handleFilter)
 
-  const nameInputElement = document.getElementById("name");
-  const ageInputElement = document.getElementById("age");
-  const filterButton = document.getElementById("filter");
+  const nameInputElement = document.getElementById("name"); // The user name input field
+  const ageInputElement = document.getElementById("age"); // The users age input field
+  const filterButton = document.getElementById("filter"); // The filter button 
 
-
+// Defines the function for finding one user by name
 const nameSearchHandler = (e) => {
-    const searchTerm = e.target.value;
+    const searchTerm = e.target.value; // Gets the input from the input element
     if (searchTerm) {
-        const result = users.find(user => user.name === searchTerm );
+        const result = users.find(user => user.name === searchTerm); // The find method looks for a name that matches the input
         if (result) {
-            createTableUI([result]);
+            createTableUI([result]); // Sends the matching name as paramenter
         }
         else {
+            // Writes out this p-tagg if no match is found
             userUl.innerHTML = `<p id="error-msg">Ingen person med navnet ${searchTerm} finnes.</p>`;
         }
     }
     else {
-        createTableUI(users);
+        createTableUI(users); // If no input the whole list is re-rendered on the page
     }
 }
 
+// Defines the function for filtering age
 const ageFilterHandler = () => {
-    const filterAge = Number(ageInputElement.value);
-    if (filterAge && !isNaN(filterAge)) {
-        const newAgeArray = users.filter(user => user.age > filterAge);
-        if (newAgeArray.length > 0) {
-            createTableUI(newAgeArray);
+    const filterAge = Number(ageInputElement.value); // Gets the value from input and converts it to number
+    if (filterAge && !isNaN(filterAge)) { // Checks if the value is there and if its a number
+        const newAgeArray = users.filter(user => user.age > filterAge); // Filter method that returns a list of users that passes the if test
+        if (filterAge && newAgeArray.length > 0) { // Checks if the value is there and if there are any users that passed the if test
+            createTableUI(newAgeArray); // Sends the new array as paramenter to the function
         }
         else{
+            // Writes out this p-tagg if there are no people above the sett age 
             userUl.innerHTML = `<p id="error-msg">Ingen personer med alder over ${filterAge} år.</p>`;
         }  
     }
     else{
-        createTableUI(users);
+        createTableUI(users); // If no input the whole list is re-rendered on the page
     }
 }
-  
-  const main = () => {
-    createTableUI(users);
-  };
-  
-  main();
 
-  nameInputElement.addEventListener("keyup", nameSearchHandler);
-  filterButton.addEventListener("click", ageFilterHandler);
+// Defines the main function
+const main = () => {
+    createTableUI(users); // Calls the createTableUI and sends the users array as a paramenter
+};
+  
+main(); // Main function that is called when the script runs after the page loads
+
+nameInputElement.addEventListener("keyup", nameSearchHandler); // Gives the user name input field a eventlistener 
+filterButton.addEventListener("click", ageFilterHandler); // Gives the filter button a eventlistener 
